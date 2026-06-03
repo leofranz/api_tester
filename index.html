@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Tester</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            height: 100vh;
+            display: flex;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            gap: 10px;
+            padding: 10px;
+        }
+
+        .left-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .right-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .panel-header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 10px 15px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .panel-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .textarea-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        textarea {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 13px;
+            resize: none;
+            outline: none;
+            background-color: #f8f8f8;
+            color: #333;
+        }
+
+        textarea:focus {
+            background-color: #fff;
+        }
+
+        .top-right {
+            flex: 1;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .bottom-right {
+            flex: 1;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #output {
+            flex: 1;
+            padding: 10px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 13px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            background-color: #f8f8f8;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .error {
+            color: #d32f2f;
+            background-color: #ffebee;
+            padding: 10px;
+            border-left: 3px solid #d32f2f;
+        }
+
+        .success {
+            color: #388e3c;
+        }
+
+        button {
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            margin: 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #1976D2;
+        }
+
+        .button-row {
+            display: flex;
+            gap: 10px;
+            padding: 10px;
+            background-color: #f5f5f5;
+            border-bottom: 1px solid #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Linkes Panel: JSON Editor -->
+        <div class="left-panel">
+            <div class="panel-header">JSON Input</div>
+            <div class="panel-content">
+                <div class="textarea-wrapper">
+                    <textarea id="jsonInput" placeholder="Geben Sie JSON Code ein...">
+[
+  { "id": 1, "name": "Item 1" },
+  { "id": 2, "name": "Item 2" },
+  { "id": 3, "name": "Item 3" }
+]
+                    </textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Rechtes Panel: Vertikal geteilt -->
+        <div class="right-panel">
+            <!-- Oben: JavaScript Code Editor -->
+            <div class="top-right">
+                <div class="panel-header">JavaScript Code</div>
+                <div class="button-row">
+                    <button onclick="executeCode()">Ausführen</button>
+                </div>
+                <div class="panel-content">
+                    <div class="textarea-wrapper">
+                        <textarea id="codeInput" placeholder="Geben Sie JavaScript Code ein...">
+return `ID: ${item.id}, Name: ${item.name}`;
+                        </textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Unten: Ausgabebereich -->
+            <div class="bottom-right">
+                <div class="panel-header">Ausgabe</div>
+                <div id="output"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function executeCode() {
+            const outputDiv = document.getElementById('output');
+            outputDiv.innerHTML = '';
+
+            try {
+                // JSON parsen
+                const jsonText = document.getElementById('jsonInput').value;
+                const data = JSON.parse(jsonText);
+
+                // Überprüfen ob es ein Array ist
+                if (!Array.isArray(data)) {
+                    outputDiv.innerHTML = '<div class="error">Fehler: JSON muss ein Array sein</div>';
+                    return;
+                }
+
+                // JavaScript Code auslesen
+                const userCode = document.getElementById('codeInput').value;
+                
+                // Für jedes Element des Arrays den Code ausführen
+                const results = [];
+                data.forEach((item, index) => {
+                    try {
+                        // Funktion erstellen die den Code ausführt
+                        const func = new Function('item', 'index', userCode);
+                        const result = func(item, index);
+                        results.push(result);
+                    } catch (error) {
+                        results.push(`<span style="color: #d32f2f;">Fehler bei Element ${index}: ${error.message}</span>`);
+                    }
+                });
+
+                // Ausgabe anzeigen
+                outputDiv.innerHTML = results
+                    .map(result => `<div>${escapeHtml(String(result))}</div>`)
+                    .join('');
+
+            } catch (error) {
+                outputDiv.innerHTML = `<div class="error">Fehler beim Parsen des JSON:\n${error.message}</div>`;
+            }
+        }
+
+        function escapeHtml(text) {
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.replace(/[&<>"']/g, m => map[m]);
+        }
+
+        // Ausführen auf Enter drücken (Ctrl+Enter)
+        document.getElementById('codeInput').addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.key === 'Enter') {
+                executeCode();
+            }
+        });
+
+        // Initial ausführen
+        executeCode();
+    </script>
+</body>
+</html>
