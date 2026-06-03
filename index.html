@@ -4,9 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>API Tester</title>
-    <!-- Highlight.js CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -66,15 +63,6 @@
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            position: relative;
-        }
-
-        .editor-container {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            position: relative;
         }
 
         textarea {
@@ -85,35 +73,12 @@
             font-size: 13px;
             resize: none;
             outline: none;
-            background-color: transparent;
-            color: transparent;
-            caret-color: white;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 2;
-            line-height: 1.5;
+            background-color: #f8f8f8;
+            color: #333;
         }
 
-        .highlight-layer {
-            flex: 1;
-            padding: 10px;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 13px;
-            overflow: auto;
-            background-color: #282c34;
-            color: #abb2bf;
-            line-height: 1.5;
-            position: relative;
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        .highlight-layer code {
-            background-color: transparent;
-            padding: 0;
+        textarea:focus {
+            background-color: #fff;
         }
 
         .top-right {
@@ -144,20 +109,20 @@
             overflow-y: auto;
             white-space: pre-wrap;
             word-wrap: break-word;
-            background-color: #282c34;
-            color: #abb2bf;
+            background-color: #f8f8f8;
+            color: #333;
             line-height: 1.5;
         }
 
         .error {
-            color: #e06c75;
-            background-color: #3a2a2a;
+            color: #d32f2f;
+            background-color: #ffebee;
             padding: 10px;
-            border-left: 3px solid #e06c75;
+            border-left: 3px solid #d32f2f;
         }
 
         .success {
-            color: #98c379;
+            color: #388e3c;
         }
 
         button {
@@ -192,16 +157,13 @@
             <div class="panel-header">JSON Input</div>
             <div class="panel-content">
                 <div class="textarea-wrapper">
-                    <div class="editor-container">
-                        <div class="highlight-layer"><code id="jsonHighlight" class="language-json"></code></div>
-                        <textarea id="jsonInput" placeholder="Geben Sie JSON Code ein...">
+                    <textarea id="jsonInput" placeholder="Geben Sie JSON Code ein...">
 [
   { "id": 1, "name": "Item 1" },
   { "id": 2, "name": "Item 2" },
   { "id": 3, "name": "Item 3" }
 ]
-                        </textarea>
-                    </div>
+                    </textarea>
                 </div>
             </div>
         </div>
@@ -216,12 +178,9 @@
                 </div>
                 <div class="panel-content">
                     <div class="textarea-wrapper">
-                        <div class="editor-container">
-                            <div class="highlight-layer"><code id="codeHighlight" class="language-javascript"></code></div>
-                            <textarea id="codeInput" placeholder="Geben Sie JavaScript Code ein...">
+                        <textarea id="codeInput" placeholder="Geben Sie JavaScript Code ein...">
 return `ID: ${item.id}, Name: ${item.name}`;
-                            </textarea>
-                        </div>
+                        </textarea>
                     </div>
                 </div>
             </div>
@@ -235,40 +194,6 @@ return `ID: ${item.id}, Name: ${item.name}`;
     </div>
 
     <script>
-        function updateHighlight(textarea, highlightElement, language) {
-            const code = textarea.value;
-            highlightElement.textContent = code;
-            highlightElement.className = `language-${language}`;
-            hljs.highlightElement(highlightElement);
-        }
-
-        function syncScroll(textarea, highlightContainer) {
-            highlightContainer.scrollTop = textarea.scrollTop;
-            highlightContainer.scrollLeft = textarea.scrollLeft;
-        }
-
-        // Initialize highlighting
-        const jsonInput = document.getElementById('jsonInput');
-        const jsonHighlight = document.getElementById('jsonHighlight');
-        const codeInput = document.getElementById('codeInput');
-        const codeHighlight = document.getElementById('codeHighlight');
-
-        jsonInput.addEventListener('input', function() {
-            updateHighlight(jsonInput, jsonHighlight, 'json');
-        });
-
-        jsonInput.addEventListener('scroll', function() {
-            syncScroll(jsonInput, jsonHighlight.parentElement);
-        });
-
-        codeInput.addEventListener('input', function() {
-            updateHighlight(codeInput, codeHighlight, 'javascript');
-        });
-
-        codeInput.addEventListener('scroll', function() {
-            syncScroll(codeInput, codeHighlight.parentElement);
-        });
-
         function executeCode() {
             const outputDiv = document.getElementById('output');
             outputDiv.innerHTML = '';
@@ -296,7 +221,7 @@ return `ID: ${item.id}, Name: ${item.name}`;
                         const result = func(item, index);
                         results.push(result);
                     } catch (error) {
-                        results.push(`<span style="color: #e06c75;">Fehler bei Element ${index}: ${error.message}</span>`);
+                        results.push(`<span style="color: #d32f2f;">Fehler bei Element ${index}: ${error.message}</span>`);
                     }
                 });
 
@@ -327,10 +252,6 @@ return `ID: ${item.id}, Name: ${item.name}`;
                 executeCode();
             }
         });
-
-        // Initial highlighting
-        updateHighlight(jsonInput, jsonHighlight, 'json');
-        updateHighlight(codeInput, codeHighlight, 'javascript');
 
         // Initial ausführen
         executeCode();
