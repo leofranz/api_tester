@@ -179,7 +179,44 @@
                 <div class="panel-content">
                     <div class="textarea-wrapper">
                         <textarea id="codeInput" placeholder="Geben Sie JavaScript Code ein...">
-return `ID: ${item.id}, Name: ${item.name}`;
+if (!item.IDMAIN) {
+    if (item.subevent.length == 0) { // keine Haupt und keine Untereinsätze
+        text = "Einsatz " + item.EVENTNUM + " Single - anlegen";
+    } else { //der Einsatz hat Untereinsätze
+        abbruch = false;
+        text = "Einsatz " + item.EVENTNUM;
+        item.subevent.forEach(getSubevents)
+        if (abbruch) {
+            text += ' Abbruch - warten bis alle Untereinsätze beendet sind';
+        } else {
+            text += ' - anlegen';
+        }
+    }
+} else {
+    if (item.mainevent.eventresource_bfi.length > 0) {
+        text = 'Einsatz ' + item.EVENTNUM + ' ignorieren da der Haupteinsatz auch in der Liste ist';
+    } else {
+        abbruch = false;
+        text = 'Einsatz ' + item.mainevent.EVENTNUM
+        item.mainevent.subevent.forEach(getSubevents)
+        if (abbruch) {
+            text += ' Abbruch - warten bis alle Untereinsätze beendet sind';
+        } else {
+            text += ' - anlegen';
+        }
+    }
+};
+
+return text
+
+function getSubevents(item, index) {
+    if (item.eventresource_bfi.length != 0 && item.STATUS != 'finished') { //auf den wollen wir warten
+        abbruch = true;
+    } else if (item.eventresource_bfi.length != 0 && item.STATUS == 'finished') { //daten nehmen wir mit
+        text += ' + Untereinsatz: ' + item.EVENTNUM;
+    }
+
+}
                         </textarea>
                     </div>
                 </div>
