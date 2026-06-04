@@ -159,9 +159,310 @@
                 <div class="textarea-wrapper">
                     <textarea id="jsonInput" placeholder="Geben Sie JSON Code ein...">
 [
-  { "id": 1, "name": "Item 1" },
-  { "id": 2, "name": "Item 2" },
-  { "id": 3, "name": "Item 3" }
+    {
+		"ID": "1",
+		"IDMAIN": null,
+		"EVENTNUM": "1",
+		"STATUS": "finished",
+		"NAMEEVENTTYPE": "einzelner Event",
+		"eventresource": [
+			{
+				"ID": "10816",
+				"NAME_AT_ALARMTIME": "BF 01"
+			},
+			{
+				"ID": "10817",
+				"NAME_AT_ALARMTIME": "BF 02"
+			}
+		],
+		"subevent": []
+	},
+	{
+		"ID": "2",
+		"IDMAIN": null,
+		"EVENTNUM": "2",
+		"STATUS": "finished",
+		"NAMEEVENTTYPE": "Event mit zwei Subevents",
+		"eventresource": [
+			{
+				"ID": "10818",
+				"NAME_AT_ALARMTIME": "BF 01"
+			},
+			{
+				"ID": "10819",
+				"NAME_AT_ALARMTIME": "BF 02"
+			}
+		],
+		"subevent": [
+			{
+				"ID": "3",
+				"IDMAIN": "2",
+				"EVENTNUM": "3",
+				"STATUS": "finished",
+				"NAMEEVENTTYPE": "Subevent 1",
+				"eventresource_bfi": [
+					{
+						"ID": "10818",
+						"NAME_AT_ALARMTIME": "BF 01"
+					},
+					{
+						"ID": "10819",
+						"NAME_AT_ALARMTIME": "BF 02"
+					}
+				]
+			
+			},
+			{
+				"ID": "4",
+				"IDMAIN": "2",
+				"EVENTNUM": "4",
+				"STATUS": "finished",
+				"NAMEEVENTTYPE": "Subevent 2",
+				"eventresource_bfi": [
+					{
+						"ID": "10820",
+						"NAME_AT_ALARMTIME": "BF 03"
+					}
+				]
+						
+			}
+		]
+    },
+	{
+		"ID": "3",
+		"IDMAIN": "2",
+		"EVENTNUM": "3",
+		"STATUS": "finished",
+		"NAMEEVENTTYPE": "Subevent 1",
+		"eventresource": [
+			{
+				"ID": "10818",
+				"NAME_AT_ALARMTIME": "BF 01"
+			},
+			{
+				"ID": "10819",
+				"NAME_AT_ALARMTIME": "BF 02"
+			}
+		],
+		"mainevent" : {
+			"ID": "2",
+			"IDMAIN": null,
+			"EVENTNUM": "2",
+			"STATUS": "finished",
+			"NAMEEVENTTYPE": "Event mit zwei Subevents",
+			"eventresource_bfi": [
+				{
+					"ID": "10818",
+					"NAME_AT_ALARMTIME": "BF 01"
+				},
+				{
+					"ID": "10819",
+					"NAME_AT_ALARMTIME": "BF 02"
+				}
+			],
+			"subevent": [
+				{
+					"ID": "3",
+					"IDMAIN": "2",
+					"EVENTNUM": "3",
+					"STATUS": "finished",
+					"NAMEEVENTTYPE": "Subevent 1",
+					"eventresource_bfi": [
+						{
+							"ID": "10818",
+							"NAME_AT_ALARMTIME": "BF 01"
+						},
+						{
+							"ID": "10819",
+							"NAME_AT_ALARMTIME": "BF 02"
+						}
+					]
+				
+				},
+				{
+					"ID": "4",
+					"IDMAIN": "2",
+					"EVENTNUM": "4",
+					"STATUS": "finished",
+					"NAMEEVENTTYPE": "Subevent 2",
+					"eventresource_bfi": [
+						{
+							"ID": "10820",
+							"NAME_AT_ALARMTIME": "BF 03"
+						}
+					]
+							
+				}
+			]
+		}
+	},
+	{
+		"ID": "4",
+		"IDMAIN": "2",
+		"EVENTNUM": "4",
+		"STATUS": "finished",
+		"NAMEEVENTTYPE": "Subevent 2",
+		"eventresource": [
+			{
+				"ID": "10820",
+				"NAME_AT_ALARMTIME": "BF 03"
+			}
+		],
+		"mainevent" : {
+			"ID": "2",
+			"IDMAIN": null,
+			"EVENTNUM": "2",
+			"STATUS": "finished",
+			"NAMEEVENTTYPE": "Event mit zwei Subevents",
+			"eventresource_bfi": [
+				{
+					"ID": "10818",
+					"NAME_AT_ALARMTIME": "BF 01"
+				},
+				{
+					"ID": "10819",
+					"NAME_AT_ALARMTIME": "BF 02"
+				}
+			],
+			"subevent": [
+				{
+					"ID": "3",
+					"IDMAIN": "2",
+					"EVENTNUM": "3",
+					"STATUS": "finished",
+					"NAMEEVENTTYPE": "Subevent 1",
+					"eventresource_bfi": [
+						{
+							"ID": "10818",
+							"NAME_AT_ALARMTIME": "BF 01"
+						},
+						{
+							"ID": "10819",
+							"NAME_AT_ALARMTIME": "BF 02"
+						}
+					]
+				
+				},
+				{
+					"ID": "4",
+					"IDMAIN": "2",
+					"EVENTNUM": "4",
+					"STATUS": "finished",
+					"NAMEEVENTTYPE": "Subevent 2",
+					"eventresource_bfi": [
+						{
+							"ID": "10820",
+							"NAME_AT_ALARMTIME": "BF 03"
+						}
+					]
+							
+				}
+			]
+		}
+	},
+	{
+		"ID": "5",
+		"IDMAIN": "6",
+		"EVENTNUM": "5",
+		"STATUS": "finished",
+		"NAMEEVENTTYPE": "Subevent 3",
+		"eventresource": [
+			{
+				"ID": "10830",
+				"NAME_AT_ALARMTIME": "BF 03"
+			}
+		],
+		"mainevent" : {
+			"ID": "6",
+			"IDMAIN": null,
+			"EVENTNUM": "6",
+			"STATUS": "alarmed",
+			"NAMEEVENTTYPE": "Event mit einem Subevents",
+			"eventresource_bfi": [
+				{
+					"ID": "10831",
+					"NAME_AT_ALARMTIME": "BF 01"
+				},
+				{
+					"ID": "10832",
+					"NAME_AT_ALARMTIME": "BF 02"
+				}
+			],
+			"subevent": [
+				{
+					"ID": "5",
+					"IDMAIN": "6",
+					"EVENTNUM": "5",
+					"STATUS": "finished",
+					"NAMEEVENTTYPE": "Subevent 3",
+					"eventresource_bfi": [
+						{
+							"ID": "10830",
+							"NAME_AT_ALARMTIME": "BF 03"
+						}
+					]
+				
+				}
+			]
+		}
+	},
+	{
+		"ID": "8",
+		"IDMAIN": "7",
+		"EVENTNUM": "8",
+		"STATUS": "finished",
+		"NAMEEVENTTYPE": "Subevent 8",
+		"eventresource": [
+			{
+				"ID": "10840",
+				"NAME_AT_ALARMTIME": "BF 03"
+			}
+		],
+		"mainevent" : {
+			"ID": "7",
+			"IDMAIN": null,
+			"EVENTNUM": "7",
+			"STATUS": "alarmed",
+			"NAMEEVENTTYPE": "Event mit drei Subevents",
+			"eventresource_bfi": [],
+			"subevent": [
+				{
+					"ID": "8",
+					"IDMAIN": "7",
+					"EVENTNUM": "8",
+					"STATUS": "finished",
+					"NAMEEVENTTYPE": "Subevent 8",
+					"eventresource_bfi": [
+						{
+							"ID": "10840",
+							"NAME_AT_ALARMTIME": "BF 03"
+						}
+					]
+				},
+				{
+					"ID": "9",
+					"IDMAIN": "7",
+					"EVENTNUM": "9",
+					"STATUS": "alarmed",
+					"NAMEEVENTTYPE": "Subevent 9",
+					"eventresource_bfi": [
+						{
+							"ID": "10841",
+							"NAME_AT_ALARMTIME": "BF 04"
+						}
+					]	
+				},
+				{
+					"ID": "10",
+					"IDMAIN": "7",
+					"EVENTNUM": "10",
+					"STATUS": "finished",
+					"NAMEEVENTTYPE": "Subevent 10",
+					"eventresource_bfi": []		
+				}
+			]
+		}
+	}
 ]
                     </textarea>
                 </div>
@@ -210,7 +511,7 @@ if (!item.IDMAIN) {
 return text
 
 function getSubevents(item, index) {
-    if (item.eventresource_bfi.length != 0 && item.STATUS != 'finished') { //auf den wollen wir warten
+    if (item.eventresource_bfi.length != 0 && item.STATUS == 'alarmed') { //auf den wollen wir warten
         abbruch = true;
     } else if (item.eventresource_bfi.length != 0 && item.STATUS == 'finished') { //daten nehmen wir mit
         text += ' + Untereinsatz: ' + item.EVENTNUM;
